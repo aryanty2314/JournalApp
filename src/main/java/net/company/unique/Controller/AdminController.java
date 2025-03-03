@@ -18,7 +18,7 @@ public class AdminController
     private UserService userService;
 
     @GetMapping("/all-users")
-    public ResponseEntity<?> getAllUsers()
+    public ResponseEntity<Object> getAllUsers()
     {
         List<User> all = userService.getAllUsers();
         if (all != null && !all.isEmpty())
@@ -33,4 +33,6 @@ public class AdminController
         userService.saveAdmin(user);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
+
 }

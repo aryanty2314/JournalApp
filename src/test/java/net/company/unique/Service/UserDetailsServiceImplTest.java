@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -41,7 +42,7 @@ public class UserDetailsServiceImplTest {
                 .roles(new ArrayList<>())
                 .build();
 
-        when(userRepository.findByUsername(ArgumentMatchers.anyString())).thenReturn(mockUser);
+        when(userRepository.findByUsername(ArgumentMatchers.anyString())).thenReturn(Optional.ofNullable(mockUser));
 
         // Act
         UserDetails user = userDetailsServiceImpl.loadUserByUsername("Sharad");

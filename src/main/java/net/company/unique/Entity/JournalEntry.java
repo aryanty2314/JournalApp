@@ -4,6 +4,7 @@ package net.company.unique.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import net.company.unique.Enum.Sentiment;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,5 +25,6 @@ public class JournalEntry {
 
     private LocalDateTime date; // Use LocalDate instead of java.sql.Date
 
+    private Sentiment sentiment;
 
 }

@@ -1,8 +1,10 @@
 package net.company.unique.Controller;
 
+import net.company.unique.ApiResponse.WeatherResponse;
 import net.company.unique.Entity.User;
 import net.company.unique.Repository.UserRepository;
 import net.company.unique.Service.UserService;
+import net.company.unique.Service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -23,12 +25,29 @@ public class UserEntryController
 {
     private UserService userService;
     private UserRepository userRepo;
+    private WeatherService weatherService;
 
-public UserEntryController(UserService userService,UserRepository userRepository)
+public UserEntryController(UserService userService, UserRepository userRepository, WeatherService weatherService)
 {
+    this.weatherService = weatherService;
     this.userService = userService;
     this.userRepo = userRepository;
 }
+
+    @GetMapping()
+    public ResponseEntity<String> Greetings() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWeather("Mumbai");
+
+        String greeting = "Weather Feels alike: N/A"; // Default message
+        if (weatherResponse != null && weatherResponse.getCurrent() != null) {
+            greeting = "Weather Feels alike: " + weatherResponse.getCurrent().getFeelslike();
+        }
+
+        String responseBody = "Hii " + authentication.getName() + ". " + greeting;
+
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
 
     @DeleteMapping
     public ResponseEntity<Object> deleteByUsername() {
